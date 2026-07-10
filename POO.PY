@@ -9,14 +9,12 @@ def limpar_tela():
     else:
         os.system("clear")
 
-
 #CONFIGURAÇÃO DO BANCO DE DADOS E ORM
 engine = create_engine('sqlite:///biblioteca.db', echo=False)
 Base = declarative_base()
 
 Session = sessionmaker(bind=engine)
 session = Session()
-
 
 #MODELO DA CLASSE 
 class Livro(Base):
@@ -60,7 +58,8 @@ def mostra_livro_cadastrado(pausa=False):
             status = "Livro emprestado" if livro.emprestado else "Livro disponível"
             print(f"ID: {livro.id} | Nome: {livro.nome} | Autor: {livro.autor} | Status do livro: {status}")
     
-   
+    #Se a função for chamada sozinha (Opção 2), ela pausa para leitura.
+    #Se for chamada dentro de outra função, não pausa.
     if pausa:
         input("\nPressione Enter para voltar ao menu...")
 
@@ -135,7 +134,7 @@ def remover_livro():
 
 #MENU PRINCIPAL 
 while True:
-    limpar_tela() #Garante que o menu limpe as operações anteriores ao voltar
+    limpar_tela() #Garante que o menu limpe o lixo das operações anteriores ao voltar
     resposta = int(input("""
     ======================================================
     |                Cadastro de livros                  |
@@ -165,5 +164,5 @@ while True:
         remover_livro()
     elif resposta == 6:
         limpar_tela()
-        print("Saindo do sistema...")
+        print("Saindo do sistema... Até logo!")
         break
